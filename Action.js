@@ -1,22 +1,49 @@
-const inquirer = require('inquirer');
-const Actions = [ 
-'view all departments',
-'view all roles',
-'view all employees',
-'add a department',
-'add a role',
-'add an employee',
- 'update an employee role',
+const mysql = require('mysql2');
 
-];
 
-inquirer
-.prompt([
-    {
-      type: 'list',
-      name: 'Actions',
-      message: 'What would you like to review?',
-      choices: Actions
-    },
-  ])
- 
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'your_password',
+  database: 'company_db'
+});
+
+
+function viewDepartments() {
+  const sql = 'SELECT * FROM departments';
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.table(rows); 
+    promptUser(); 
+  });
+}
+
+
+function viewRoles() {
+  const sql = 'SELECT * FROM roles';
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.table(rows); 
+    promptUser(); 
+  });
+}
+
+function viewEmployees() {
+  const sql = 'SELECT * FROM employees';
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.table(rows);
+    promptUser(); 
+  });
+}
+
+module.exports={}
