@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const{viewDep, viewRoles, viewWorker} = require('./View.js');
-const{addDep, addRole, addWorker, updateRole} = require('./Add.js');
+const{addDep, addRole, addWorker, } = require('./Add.js');
+const {updateRole} = require('./newRole.js');
 
 function promptUser() {
     inquirer
