@@ -4,12 +4,12 @@ const mysql = require('mysql2');
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'your_password',
+  password: '1mADHDK1d$',
   database: 'company_db'
 });
 
 
-function viewDepartments() {
+function viewDep(callback) {
   const sql = 'SELECT * FROM departments';
   db.query(sql, (err, rows) => {
     if (err) {
@@ -17,12 +17,12 @@ function viewDepartments() {
       return;
     }
     console.table(rows); 
-    promptUser(); 
+    callback(); 
   });
 }
 
 
-function viewRoles() {
+function viewRoles(callback) {
   const sql = 'SELECT * FROM roles';
   db.query(sql, (err, rows) => {
     if (err) {
@@ -30,11 +30,11 @@ function viewRoles() {
       return;
     }
     console.table(rows); 
-    promptUser(); 
+    callback(); 
   });
 }
 
-function viewEmployees() {
+function viewWorker(callback) {
   const sql = 'SELECT * FROM employees';
   db.query(sql, (err, rows) => {
     if (err) {
@@ -42,8 +42,8 @@ function viewEmployees() {
       return;
     }
     console.table(rows);
-    promptUser(); 
+    callback(); 
   });
 }
 
-module.exports={}
+module.exports={viewDep, viewRoles, viewWorker};
