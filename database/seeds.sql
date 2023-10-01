@@ -12,3 +12,4 @@ VALUES (1, 'Manager', 1000, 1),
 INSERT INTO employees (id, first_name, last_name, role_id, manager_id)
 VALUES (1, 'Helena', 'Blade', 1, NULL),
        (2, 'Selena', 'Carver', 1, 1);
+       

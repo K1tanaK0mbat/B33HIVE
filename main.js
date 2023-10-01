@@ -47,12 +47,11 @@ function promptUser() {
         case 'update an employee role':
           updateRole(promptUser);
           break;
-          case 'Exit application':
-            process.exit(0);
-            break;
           case 'Delete an employee, role, or department':
           Delete(promptUser);
           break;
+          case 'Exit application':
+            process.exit(0);
         }
       });
   }
