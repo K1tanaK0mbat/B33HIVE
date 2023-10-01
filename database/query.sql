@@ -1,17 +1,24 @@
 
-SELECT roles.id AS role_id,  roles.title AS role_title, departments.dep_name AS dep_name, roles.salary
+SELECT
+    roles.id AS role_id,
+    roles.title AS role_title,
+    departments.dep_name AS dep_name,
+    roles.salary
 FROM roles
 JOIN departments ON roles.department_id = departments.id;
 
 SELECT
-    employees.id AS employee_id,
-    employees.first_name,
-    employees.last_name,
-    roles.title AS role_title,
-    departments.dep_name AS department_name,
-    roles.salary as salary,
-    CONCAT(managers.first_name, ' ', managers.last_name) AS manager_name
-FROM employees
-JOIN roles ON employees.role_id = roles.id
-JOIN departments ON roles.department_id = departments.id
-LEFT JOIN employees AS managers ON employees.manager_id = managers.id;
+    e.id AS employee_id,
+    e.first_name AS employee_first_name,
+    e.last_name AS employee_last_name,
+    r.title AS employee_role_title,
+    d.dep_name AS employee_department_name,
+    r.salary AS employee_salary,
+    CONCAT(m.first_name, ' ', m.last_name) AS manager_name
+FROM employees e
+JOIN roles r ON e.role_id = r.id
+JOIN departments d ON r.department_id = d.id
+LEFT JOIN employees m ON e.manager_id = m.id;
+
+
+
