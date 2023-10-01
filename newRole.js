@@ -17,7 +17,6 @@ function updateRole(callback) {
           return callback();
         }
   
-        // Prompt the user to select an employee and a role
         inquirer
           .prompt([
             {

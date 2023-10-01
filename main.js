@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const{viewDep, viewRoles, viewWorker} = require('./View.js');
 const{addDep, addRole, addWorker, } = require('./Add.js');
 const {updateRole} = require('./newRole.js');
+const {Delete} = require ('./deleteRow.js');
 
 function promptUser() {
     inquirer
@@ -43,6 +44,9 @@ function promptUser() {
           break;
         case 'update an employee role':
           updateRole(promptUser);
+          break;
+          case 'Delete an employee, role, or department':
+          Delete(promptUser);
           break;
         }
       });
