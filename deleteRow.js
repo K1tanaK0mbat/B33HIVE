@@ -9,7 +9,7 @@ const db = mysql.createConnection({
 });
 
 function eraseWorker(callback) {
-  const employees = 'SELECT id FROM employees';
+  const employees = 'SELECT id, CONCAT(first_name, " ", last_name) AS full_name FROM employees';
 
   db.query(employees, (err, employees) => {
     if (err) {
@@ -23,6 +23,7 @@ function eraseWorker(callback) {
           name: 'employees',
           message: 'Select an employee to delete',
           choices: employees.map((employee) => ({
+            name: employee.full_name,
             value: employee.id,
           })),
         },
@@ -43,9 +44,9 @@ function eraseWorker(callback) {
 }
 
 function eraseDep(callback) {
-  const departments = 'SELECT id FROM departments';
+  const departments = 'SELECT dep_name FROM departments';
 
-  db.query(departments, (err, Department) => {
+  db.query(departments, (err, departments) => {
     if (err) {
       console.error(err);
       return callback();
@@ -56,14 +57,15 @@ function eraseDep(callback) {
           type: 'list',
           name: 'departments',
           message: 'Select a department to delete ',
-          choices: Department.map((department) => ({
+          choices: departments.map((department) => ({
+            name: department.dep_name,
             value: department.id,
           })),
         },
       ])
       .then((answers) => {
         const { departments } = answers;
-        const sql = 'DELETE FROM departments WHERE id = ?';
+        const sql = 'DELETE FROM departments WHERE dep_name = ?';
         db.query(sql, [departments], (err, result) => {
           if (err) {
             console.error(err);
@@ -77,7 +79,7 @@ function eraseDep(callback) {
 }
 
 function eraseRole(callback) {
-  const roles = 'SELECT id FROM roles';
+  const roles = 'SELECT title FROM roles';
 
   db.query(roles, (err, roles) => {
     if (err) {
@@ -91,13 +93,14 @@ function eraseRole(callback) {
           name: 'role',
           message: 'Select a role to delete ',
           choices: roles.map((role) => ({
+            name: role.title,
             value: role.id,
           })),
         },
       ])
       .then((answers) => {
         const { role } = answers;
-        const sql = 'DELETE FROM roles WHERE id = ?';
+        const sql = 'DELETE FROM roles WHERE title = ?';
         db.query(sql, [role], (err, result) => {
           if (err) {
             console.error(err);
@@ -138,6 +141,7 @@ function Delete(callback) {
           break;
           case 'Exit':
             callback();
+            break;
       }
     });
 }

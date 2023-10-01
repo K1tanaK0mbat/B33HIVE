@@ -53,12 +53,12 @@ function addRole(callback) {
          {
             type:'input',
             name: 'department',
-            message:'Enter department id'
+            message:'Enter department name'
         }
       ])
       .then((answers) => {
         const { role, salary, department } = answers;
-        const sql = 'INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)';
+        const sql = 'INSERT INTO roles (title, salary, department_name) VALUES (?, ?, ?)';
         db.query(sql, [role, salary, department], (err, result) => {
           if (err) {
             console.error(err);
@@ -91,58 +91,87 @@ function addRole(callback) {
   }
   
 
-
   function addWorker(callback) {
-    inquirer
-      .prompt([
-        {
-          type: 'input',
-          name: 'firstname',
-          message: 'Enter first name of worker',
-        },
-        {
-          type: 'input',
-          name: 'lastname',
-          message: 'Enter last name of worker',
-        },
-        {
-          type: 'input',
-          name: 'role',
-          message: 'Assign role ID to worker',
-        },
-        {
-          type: 'confirm',
-          name: 'isManager',
-          message: 'Is this worker a manager?',
-          default: false,
-        },
-        {
-          type: 'input',
-          name: 'manager',
-          message: 'Assign manager ID to this worker',
-          when: (answers) => !answers.isManager, 
-          validate: function (input) {
-            return isValidManagerID(input); 
-          },
-        },
-      ])
-      .then((answers) => {
-        const { firstname, lastname, role, manager } = answers;
-        const managerID = answers.isManager ? null : manager;
-        const sql = 'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
-        db.query(sql, [firstname, lastname, role, managerID], (err, result) => {
-          if (err) {
-            console.error(err);
-          } else {
-            console.log(`Added  ${firstname} ${lastname}`);
-          }
-          callback(); 
-        });
-      });
-  }
+    const getRolesQuery = 'SELECT title, department_name FROM roles';
+    db.query(getRolesQuery, (err, results) => {
+      if (err) {
+        console.error(err);
+        return callback();
+      }
   
+      const roleChoices = results.map((row) => row.title);
+      const departmentMap = results.reduce((map, row) => {
+        map[row.title] = row.department_name;
+        return map;
+      }, {});
+  
+      inquirer
+        .prompt([
+          {
+            type: 'input',
+            name: 'firstname',
+            message: 'Enter first name of worker',
+          },
+          {
+            type: 'input',
+            name: 'lastname',
+            message: 'Enter last name of worker',
+          },
+          {
+            type: 'confirm',
+            name: 'isManager',
+            message: 'Is this worker a manager?',
+            default: false,
+          },
+          {
+            type: 'input',
+            name: 'manager',
+            message: 'Assign manager ID to this worker',
+            when: (answers) => !answers.isManager,
+            validate: function (input) {
+              return isValidManagerID(input);
+            },
+          },
+          {
+            type: 'list',
+            name: 'role',
+            message: 'Select a role for the worker',
+            choices: roleChoices,
+          },
+        ])
+        .then((answers) => {
+          const selectedRole = answers.role;
+          const selectedDepartment = departmentMap[selectedRole];
+  
+          const getRoleQuery = 'SELECT salary FROM roles WHERE title = ?';
+          db.query(getRoleQuery, [selectedRole], (err, roleResults) => {
+            if (err) {
+              console.error(err);
+              return callback();
+            }
 
-
+            const defaultSalary = roleResults.length > 0 ? roleResults[0].salary : 0;
+  
+            const { firstname, lastname, manager, role } = answers;
+            const managerID = answers.isManager ? null : manager;
+            const sql =
+              'INSERT INTO employees (first_name, last_name, manager_id, role_name, salary, department_name) VALUES (?, ?, ?, ?, ?, ?)';
+            db.query(
+              sql,
+              [firstname, lastname, managerID, role, defaultSalary, selectedDepartment],
+              (err, result) => {
+                if (err) {
+                  console.error(err);
+                } else {
+                  console.log(`Added ${firstname} ${lastname}`);
+                }
+                callback();
+              }
+            );
+          });
+        });
+    });
+  }
   
 
 module.exports={addDep, addRole, addWorker,};
