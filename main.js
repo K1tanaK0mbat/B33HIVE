@@ -21,7 +21,7 @@ function promptUser() {
             'View managers',
         'update an employee role',
         'Delete an employee, role, or department',
-        'exit',
+        'Exit Application',
           ]
         }
       ])
@@ -54,8 +54,8 @@ function promptUser() {
           case 'Delete an employee, role, or department':
           Delete(promptUser);
           break;
-          case 'Exit application':
-            process.exit(0);
+          case 'Exit Application':
+            process.exit();
         }
       });
   }
