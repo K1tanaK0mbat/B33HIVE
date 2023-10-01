@@ -1,6 +1,13 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '1mADHDK1d$',
+    database: 'company_db'
+  });
+  
 function updateRole(callback) {
     const employees = 'SELECT id, CONCAT(first_name, " ", last_name) AS full_name FROM employees';
     const roles = 'SELECT id, title FROM roles';
