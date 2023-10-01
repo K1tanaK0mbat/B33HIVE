@@ -70,6 +70,27 @@ function addRole(callback) {
       });
   }
 
+  function isValidManagerID(managerID) {
+    return new Promise((resolve, reject) => {
+      const sql = 'SELECT COUNT(*) AS count FROM employees WHERE id = ?';
+      db.query(sql, [managerID], (err, result) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          const count = result[0].count;
+          if (count === 1) {
+            resolve(true); 
+          } else {
+            console.error('Invalid manager ID. Please enter a valid manager ID.');
+            resolve(false); 
+          }
+        }
+      });
+    });
+  }
+  
+
 
   function addWorker(callback) {
     inquirer
@@ -88,9 +109,6 @@ function addRole(callback) {
           type: 'input',
           name: 'role',
           message: 'Assign role ID to worker',
-          validate: function (input) {
-            return isValidRoleID(input); 
-          },
         },
         {
           type: 'confirm',

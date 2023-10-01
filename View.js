@@ -47,7 +47,7 @@ function viewWorker(callback) {
 }
 
 function viewManage(callback) {
-  const sql = 'SELECT * FROM managers';
+  const sql = 'SELECT * FROM employees WHERE manager_id IS NULL';
   db.query(sql, (err, rows) => {
     if (err) {
       console.error(err);

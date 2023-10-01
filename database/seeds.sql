@@ -10,11 +10,10 @@ VALUES ('Writers Manager', 2000, 1),
        ('Decision-Mapper', 1000, 1),
        ('Graphic Designer', 2000, 2);
 
-INSERT INTO managers (first_name, last_name, role_id)
-VALUES ('Marie', 'Cull', 1),
-       ('Gale', 'Rivers', 2);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES ('Helena', 'Blade', 3, 1),
-       ('Selena', 'Carver', 4, 2);
+       ('Selena', 'Carver', 4, 2),
+       ('Marie', 'Cull', 1, NULL),
+       ('Gale', 'Rivers', 2, NULL);
 
