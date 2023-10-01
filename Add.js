@@ -36,7 +36,7 @@ function addDep(callback) {
   
 
 
-function addRole() {
+function addRole(callback) {
     inquirer
       .prompt([
         {
@@ -71,7 +71,7 @@ function addRole() {
   }
 
 
-function addWorker() {
+function addWorker(callback) {
     inquirer
       .prompt([
         {

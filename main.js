@@ -18,6 +18,7 @@ function promptUser() {
             'add a role',
             'add an employee',
         'update an employee role',
+        'exit',
           ]
         }
       ])
@@ -44,6 +45,9 @@ function promptUser() {
         case 'update an employee role':
           updateRole(promptUser);
           break;
+          case 'Exit application':
+            process.exit(0);
+            break;
         }
       });
   }
