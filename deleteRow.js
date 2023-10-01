@@ -140,8 +140,12 @@ function Delete(callback) {
           eraseRole(() => Delete());
           break;
           case 'Exit':
-            callback();
-            break;
+            if (callback) {
+                callback();
+              } else {
+                process.exit();
+              }
+              break;
       }
     });
 }
