@@ -19,6 +19,7 @@ function promptUser() {
             'add a role',
             'add an employee',
         'update an employee role',
+        'Delete an employee, role, or department',
           ]
         }
       ])
