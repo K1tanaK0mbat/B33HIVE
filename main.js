@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const{viewDep, viewRoles, viewWorker} = require('./View.js');
+const{viewDep, viewRoles, viewWorker, viewManage} = require('./View.js');
 const{addDep, addRole, addWorker, } = require('./Add.js');
 const {updateRole} = require('./newRole.js');
 const {Delete} = require ('./deleteRow.js');
@@ -18,6 +18,7 @@ function promptUser() {
             'add a department',
             'add a role',
             'add an employee',
+            'View managers',
         'update an employee role',
         'Delete an employee, role, or department',
         'exit',
@@ -35,6 +36,9 @@ function promptUser() {
           case 'View all employees':
             viewWorker(promptUser);
             break;
+            case 'View managers':
+              viewManage(promptUser);
+              break;
             case 'add a department':
           addDep(promptUser);
           break;

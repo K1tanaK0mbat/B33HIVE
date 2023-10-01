@@ -46,4 +46,15 @@ function viewWorker(callback) {
   });
 }
 
-module.exports={viewDep, viewRoles, viewWorker};
+function viewManage(callback) {
+  const sql = 'SELECT * FROM managers';
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.table(rows);
+    callback(); 
+  });
+}
+module.exports={viewDep, viewRoles, viewWorker, viewManage};

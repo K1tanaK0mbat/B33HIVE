@@ -71,7 +71,7 @@ function addRole(callback) {
   }
 
 
-function addWorker(callback) {
+  function addWorker(callback) {
     inquirer
       .prompt([
         {
@@ -80,25 +80,39 @@ function addWorker(callback) {
           message: 'Enter first name of worker',
         },
         {
-            type: 'input',
-            name: 'lastname',
-            message: 'Enter last name of worker',
+          type: 'input',
+          name: 'lastname',
+          message: 'Enter last name of worker',
+        },
+        {
+          type: 'input',
+          name: 'role',
+          message: 'Assign role ID to worker',
+          validate: function (input) {
+            return isValidRoleID(input); 
           },
-          {
-            type: 'input',
-            name: 'role',
-            message: 'Assign role ID to worker',
+        },
+        {
+          type: 'confirm',
+          name: 'isManager',
+          message: 'Is this worker a manager?',
+          default: false,
+        },
+        {
+          type: 'input',
+          name: 'manager',
+          message: 'Assign manager ID to this worker',
+          when: (answers) => !answers.isManager, 
+          validate: function (input) {
+            return isValidManagerID(input); 
           },
-          {
-            type: 'input',
-            name: 'manager',
-            message: 'Assign manager ID to this worker',
-          },
+        },
       ])
       .then((answers) => {
         const { firstname, lastname, role, manager } = answers;
+        const managerID = answers.isManager ? null : manager;
         const sql = 'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
-        db.query(sql, [firstname, lastname, role, manager], (err, result) => {
+        db.query(sql, [firstname, lastname, role, managerID], (err, result) => {
           if (err) {
             console.error(err);
           } else {
@@ -108,6 +122,7 @@ function addWorker(callback) {
         });
       });
   }
+  
 
 
   
