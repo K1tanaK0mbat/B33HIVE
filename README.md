@@ -16,6 +16,10 @@ The purpose of this project is to provide bussiness owners with an application h
 To install this application, users will have to download the zip file from the github repo. Inorder to run the program, users will need to open the program in a source-code editor's terminal. After opening the folder, type npm i to install packages and type npm init -y to begin running the program.
 ## Usage 
 To use the application, type node main.js into the terminal. There will be a list of prompts asking the user what they want to view or change regarding employee information. Use up and down arrows to scroll through list and choose an option. 
+https://drive.google.com/file/d/1cexDNppUFgU_KcuAFKSQavCZ6uvcofTy/view
+![image](https://github.com/K1tanaK0mbat/B33HIVE/assets/134855189/9b70e054-1195-4152-be9e-a63be1635444)
+
+
 ## License 
 For this project, I license my work under the MIT License.License info is here https://choosealicense.com/licenses/mit/
 ## Contribution
