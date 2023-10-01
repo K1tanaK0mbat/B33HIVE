@@ -23,4 +23,4 @@ To contribute to futher development, offer ways to edit code so that bussiness o
 ## Test 
 To test, simply answer any values into the prompt questions. You can delete them later. You could also use MYSQL Workbench to test the SQL tables by using different SQL statements.
 ## Questions
-My Github is K1tanaK0mbat https://github.com/K1tanaK0mbat and my email is Kitanak365@gmail.com email me anytime with questions or comments
+My Github is K1tanaK0mbat https://github.com/K1tanaK0mbat and my email is Kitanak365@gmail.com. Email me anytime with questions or comments
